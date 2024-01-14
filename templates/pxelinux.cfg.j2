@@ -1,0 +1,12 @@
+# D-I config version 2.0
+search path for the c32 support libraries (libcom32, libutil etc.)
+path debian-installer/amd64/boot-screens/
+prompt 0
+timeout 0
+label debian12
+  menu label debian 12 automated
+  kernel debian-installer/amd64/linux
+  append initrd=debian-installer/amd64/initrd.gz auto=true priority=critical interface=auto netcfg/link_wait_timeout=10 netcfg/dhcp_timeout=30 preseed/url={{ preseed_url }}
+
+include debian-installer/amd64/boot-screens/menu.cfg
+default debian-installer/amd64/boot-screens/vesamenu.c32

@@ -1,0 +1,32 @@
+- name: Ensure Nginx is installed
+  apt:
+    name: nginx
+    state: latest
+  become: yes
+
+- name: Ensure /var/www/html/preseed exists
+  file:
+    state: directory
+    path: /var/www/html/preseed
+    owner: root
+    group: www-data
+    mode: 0750
+  become: yes
+
+- name: Copy workstation preseed file to /var/www/html/preseed/workstation_preseed.cfg
+  template:
+    src: workstation_preseed.cfg.j2
+    dest: /var/www/html/preseed/workstation_preseed.cfg
+    owner: root
+    group: www-data
+    mode: 0640
+  become: yes
+
+- name: Copy deploy.sh to /var/www/html/preseed/deploy.sh
+  copy:
+    src: deploy.sh
+    dest: /var/www/html/preseed/deploy.sh
+    owner: root
+    group: www-data
+    mode: 0640
+  become: yes

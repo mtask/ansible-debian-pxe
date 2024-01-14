@@ -1,0 +1,70 @@
+- name: Ensure {{ tftp_root }} exists
+  file:
+    path: "{{ tftp_root }}"
+    mode: 0755
+    owner: root
+    group: root
+    recurse: yes
+  become: yes
+
+- name: Stat if netboot.tar.gz already is unarchived
+  stat:
+    path: "{{ tftp_root }}/debian-installer"
+  register: _debian_installer
+  become: yes
+
+- name: Download and unarchive netboot.tar.gz
+  ansible.builtin.unarchive:
+    src: http://ftp.debian.org/debian/dists/bookworm/main/installer-amd64/current/images/netboot/netboot.tar.gz
+    dest: "{{ tftp_root }}/"
+    remote_src: yes
+  become: yes
+  when: not _debian_installer.stat.exists
+
+- name: "Create a symbolic link debian-installer/amd64/grubx64.efi -> {{ tftp_root }}/"
+  ansible.builtin.file:
+    src: debian-installer/amd64/grubx64.efi
+    dest: "{{ tftp_root }}/grubx64.efi"
+    owner: root
+    group: root
+    state: link
+  become: yes
+
+- name: "Create a symbolic link debian-installer/amd64/grub -> {{ tftp_root }}/"
+  ansible.builtin.file:
+    src: debian-installer/amd64/grub
+    dest: "{{ tftp_root }}/grub"
+    owner: root
+    group: root
+    state: link
+  become: yes
+
+- name: Ensure dnsmasq is installed
+  apt:
+    name: dnsmasq
+    state: present
+  become: yes
+
+- name: "Copy dnsmasq's configuration template"
+  template:
+    src: dnsmasq.conf.j2
+    dest: /etc/dnsmasq.conf
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+
+- name: "Copy pxelinux.cfg configuration template"
+  template:
+    src: pxelinux.cfg.j2
+    dest: "{{ tftp_root }}/pxelinux.cfg/default"
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+
+- name: Restart dnsmasq
+  systemd:
+    name: dnsmasq
+    state: restarted
+  become: yes

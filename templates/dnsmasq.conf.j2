@@ -1,0 +1,20 @@
+port=0
+interface={{ dhcp_interface }}
+bind-interfaces
+domain=test.local
+dhcp-range={{ dhcp_start }},{{ dhcp_end }},{{ dhcp_netmask }},1h
+dhcp-boot=pxelinux.0,pxeserver,{{ dhcp_pxe_server }}
+dhcp-option=option:router,{{ dhcp_gw }}
+dhcp-option=6,{{ dhcp_dns }}
+enable-tftp
+tftp-root={{ tftp_root }}
+pxe-service=x86PC, "PXELINUX (BIOS)", "pxelinux.0"
+pxe-service=X86-64_EFI,"PXE (UEFI)","grubx64.efi"
+
+# other UEFI type identifier, see RFC4578 section-2.1
+
+pxe-service=2, "PXELINUX (0002-EFI)", "grubx64.efi"
+pxe-service=6, "PXELINUX (0006-EFI)", "grubx64.efi"
+pxe-service=7, "PXELINUX (0007-EFI)", "grubx64.efi"
+pxe-service=8, "PXELINUX (0008-EFI)", "grubx64.efi"
+pxe-service=9, "PXELINUX (0009-EFI)", "grubx64.efi"

@@ -1,0 +1,27 @@
+# dnsmasq.conf -> interface=dhcp_interface
+dhcp_interface: enp1s0
+# dnsmasq.conf -> dhcp-range=dhcp_start,dhcp_end,dhcp_netmask,1h
+dhcp_start: 10.5.10.100
+dhcp_end: 10.5.10.200
+dhcp_netmask: 255.255.255.0
+# dnsmasq.conf -> dhcp-option=6,dhcp_dns
+dhcp_dns: 8.8.8.8
+# dnsmasq.conf -> dhcp-boot=pxelinux.0,pxeserver,dhcp_pxe_server
+dhcp_pxe_server: 10.5.10.10
+# dnsmasq.conf -> dhcp-option=option:router,dhcp_gw
+dhcp_gw: 10.5.10.1
+# dnsmasq.conf -> tftp-root=
+tftp_root: /srv/tftp
+# pxelinux.cfg/default -> preseed/url=
+preseed_url: http://10.5.10.10/preseed/workstation_preseed.cfg
+
+## Preseed configuration ##
+# Name of the new user
+#  - password is prompted
+#  - user is added to sudo group
+debian_user: user
+debian_timezone: Europe/Helsinki
+debian_mirror: www.nic.funet.fi
+# Same host as the PXE server
+# - deploy.sh is hosted at http://<deploy_script_host>/preseed/deploy.sh
+deploy_script_host: 10.5.10.10
