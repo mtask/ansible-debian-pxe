@@ -15,7 +15,7 @@ Prompts that are not automated by design:
 * "normal" user's password (username is set in variables).
 * LUKS encryption password.
   
-Used preseed file is created from template workstation_preseed.cfg.j2 which can be configured to server different needs.
+Used preseed file is created from template workstation_preseed.cfg.j2 (-\> `templates/`) which can be configured to serve different needs.
   
 Role contains a file named deploy.sh under the "files" directory. This is hosted on the nginx server and configured in preseed late commands to be executed at the end of the installation.
 It contains some placeholder things but can be modified to do anything. Just remember that it is executed during the installation so you need to use `in-target` commands and `/target/` path accordingly.
