@@ -9,7 +9,7 @@ Role installs Dnsmasq to target hosts with TFTP and DHCP server configuration. D
 Nginx server is configured on the same host to serve preseed configuration file. Role only configures one default preseed file and pxelinux menu entry. 
 It doesn't support invidual pxelinux.cfg entries or preseed files. 
   
-Promts that are not automated by design:
+Prompts that are not automated by design:
 
 * root user's password.
 * "normal" user's password (username is set in variables).
