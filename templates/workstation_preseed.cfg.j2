@@ -479,5 +479,5 @@ d-i preseed/late_command in-target apt-get update; \
     in-target apt-get -y upgrade; \
     in-target apt-get -y install sudo; \
     in-target usermod -a -G sudo {{ debian_user }}; \
-    in-target wget -O /target/tmp/deploy.sh http://{{ deploy_script_host }}/preseed/deploy.sh; \
-    in-target /bin/bash /target/tmp/deploy.sh;
+    wget -O /tmp/deploy.sh http://{{ deploy_script_host }}/preseed/deploy.sh; \
+    /bin/sh /tmp/deploy.sh;
