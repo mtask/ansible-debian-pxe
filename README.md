@@ -22,7 +22,7 @@ It contains some placeholder things but can be modified to do anything. Just rem
 
 ### Usage
 
-* Set variables correctly for your environment
+* Set variables correctly for your environment (check `defaults/main.yml`)
 * Call role against PXE server host in a playbook. For example:
 
 ```yml
